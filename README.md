@@ -1,0 +1,1 @@
+This is a basic web application developed while learning Django. This idea of this application came from some existing solutions to help assignments but a personal implementation. Basic feature of adding assignment and responding to them is created with proper access control, fileheader type check to insure fils integrity and security and rate limiting.

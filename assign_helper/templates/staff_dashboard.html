@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-6 py-10">
+    <div class="mb-8">
+        <h1 class="text-3xl font-extrabold text-slate-800 uppercase tracking-tight">
+            Expert <span class="text-blue-600">Workstation</span>
+        </h1>
+        <p class="text-slate-500">Welcome, {{ user.username }}. You are viewing all student requests.</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-slate-50 text-slate-400 text-xs uppercase tracking-widest">
+                    <th class="px-6 py-4">Student</th>
+                    <th class="px-6 py-4">Subject</th>
+                    <th class="px-6 py-4">Deadline</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4">Action</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+                {% for assignment in assignments %}
+                <tr class="hover:bg-blue-50/30 transition">
+                    <td class="px-6 py-4">
+                        <span class="font-bold text-slate-700">{{ assignment.user.username }}</span>
+                    </td>
+                    <td class="px-6 py-4 text-slate-600">{{ assignment.subject }}</td>
+                    <td class="px-6 py-4 text-sm {% if assignment.status == 'pending' %}text-red-500 font-medium{% endif %}">
+                        {{ assignment.deadline|date:"M d, H:i" }}
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase 
+                            {% if assignment.status == 'pending' %} bg-yellow-100 text-yellow-700 {% else %} bg-green-100 text-green-700 {% endif %}">
+                            {{ assignment.status }}
+                        </span>
+                        
+                    </td>
+                    <td class="px-6 py-4">
+                        <a href="{% url 'assignment_detail' assignment.pk %}" 
+                               class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 transition">
+                                 Open Request 
+                            </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="px-6 py-20 text-center text-slate-400 italic">
+                        No assignments found in the system.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
